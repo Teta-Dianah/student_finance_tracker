@@ -3,22 +3,26 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('search-input');
+    const categoryFilter = document.getElementById('category-filter');
+    const sortSelect = document.getElementById('sort-select');
+
     const listContainer = document.getElementById('transaction-list');
 
     // Regexes provided by user
-    const descriptionRegex = /^\S(?:.*\S)?$/;
+    const descriptionRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
     const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
     const categoryRegex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 
     /**
      * Render the list of transactions
      */
-    function renderTransactions() {
-        const transactions = window.Storage.getTransactions();
+    function renderTransactions(transactionsToRender) {
+        const transactions = transactionsToRender || window.Storage.getTransactions();
         listContainer.innerHTML = '';
 
         if (transactions.length === 0) {
-            listContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No transactions found. Add one!</p>';
+            listContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No transactions found.</p>';
             return;
         }
 
@@ -27,6 +31,57 @@ document.addEventListener('DOMContentLoaded', () => {
             listContainer.appendChild(item);
         });
     }
+
+    /**
+     * Filter and Sort Transactions logic
+     */
+    function filterAndSortTransactions() {
+        const query = searchInput.value.toLowerCase();
+        const category = categoryFilter.value;
+        const sortBy = sortSelect.value;
+
+        let filtered = window.Storage.getTransactions();
+
+        // 1. Search Filter
+        if (query) {
+            filtered = filtered.filter(txn =>
+                txn.description.toLowerCase().includes(query) ||
+                txn.category.toLowerCase().includes(query)
+            );
+        }
+
+        // 2. Category Filter
+        if (category !== 'all') {
+            filtered = filtered.filter(txn => txn.category === category);
+        }
+
+        // 3. Sorting
+        filtered.sort((a, b) => {
+            switch (sortBy) {
+                case 'date-desc':
+                    return new Date(b.date) - new Date(a.date);
+                case 'date-asc':
+                    return new Date(a.date) - new Date(b.date);
+                case 'category-asc':
+                    return a.category.localeCompare(b.category);
+                case 'category-desc':
+                    return b.category.localeCompare(a.category);
+                case 'amount-asc':
+                    return a.amount - b.amount;
+                case 'amount-desc':
+                    return b.amount - a.amount;
+                default:
+                    return 0;
+            }
+        });
+
+        renderTransactions(filtered);
+    }
+
+    // Event Listeners for Live Search, Filter and Sort
+    searchInput.addEventListener('input', filterAndSortTransactions);
+    categoryFilter.addEventListener('change', filterAndSortTransactions);
+    sortSelect.addEventListener('change', filterAndSortTransactions);
 
     /**
      * Create a transaction item element
@@ -134,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const newAmount = row.querySelector('.edit-amount').value;
 
             let errors = [];
-            if (!descriptionRegex.test(newDesc)) errors.push('Invalid description.');
+            if (!descriptionRegex.test(newDesc)) errors.push('Invalid description');
             if (!amountRegex.test(newAmount)) errors.push('Invalid amount.');
             if (!categoryRegex.test(newCat)) errors.push('Invalid category.');
             if (!newDate) errors.push('Date required.');
@@ -161,5 +216,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initial render
-    renderTransactions();
+    filterAndSortTransactions();
 });

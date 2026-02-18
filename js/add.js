@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const feedback = document.getElementById('form-feedback');
 
     // Regexes provided by user
-    const descriptionRegex = /^\S(?:.*\S)?$/;
+    const descriptionRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
     const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
     const categoryRegex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isValid = true;
 
         if (!descriptionRegex.test(desc)) {
-            showError('desc-error', 'Invalid description. Avoid leading/trailing whitespace.');
+            showError('desc-error', 'Invalid description');
             isValid = false;
         }
 
