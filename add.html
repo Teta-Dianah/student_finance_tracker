@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Transaction - Student Finance Tracker</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <nav class="main-nav" aria-label="Main Navigation">
+            <div class="nav-brand">
+                <span class="brand-text">Finance</span>
+            </div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link"><span class="text">Dashboard</span></a></li>
+                <li class="nav-item"><a href="transactions.html" class="nav-link"><span
+                            class="text">Transactions</span></a></li>
+                <li class="nav-item active"><a href="add.html" class="nav-link"><span class="text">Add New</span></a>
+                </li>
+                <li class="nav-item"><a href="settings.html" class="nav-link"><span class="text">Settings</span></a>
+                </li>
+                <li class="nav-item"><a href="about.html" class="nav-link"><span class="text">About</span></a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="app-header">
+                <h1>Add Transaction</h1>
+                <div class="user-profile">
+                    <span class="user-name">Student</span>
+                    <div class="avatar">S</div>
+                </div>
+            </header>
+
+            <!-- Add Transaction Section -->
+            <section id="add" class="view-section">
+                <div class="form-container glass box-glow">
+                    <form>
+                        <div class="form-group">
+                            <label for="desc">Description</label>
+                            <input type="text" id="desc" placeholder="e.g. Textbooks" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category">
+                                <option value="food">Food</option>
+                                <option value="transport">Transport</option>
+                                <option value="books">Books</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Save Transaction</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+:root {
+    /* Colors - Clean Light Premium Theme */
+    --bg-primary: #DEE7E7;
+    --bg-secondary: #F0F4F4;
+    /* Lighter shade for gradients */
+
+    --text-primary: #2C3E50;
+    /* Dark Slate Blue */
+    --text-secondary: #546E7A;
+    /* Blue Grey */
+    --text-accent: #008080;
+    /* Teal */
+
+    --accent-primary: #008080;
+    /* Teal */
+    --accent-secondary: #4A90E2;
+    /* Royal Blue */
+    --accent-success: #27AE60;
+    --accent-danger: #E74C3C;
+    --accent-warning: #F39C12;
+
+    /* Glassmorphism - Light Mode */
+    --glass-bg: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --backdrop-blur: blur(12px);
+
+    /* Typography */
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2.25rem;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 20px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+
+    /* Border Radius */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-normal: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
