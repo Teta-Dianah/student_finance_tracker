@@ -404,6 +404,39 @@ select:focus {
     background: white;
 }
 
+.error-msg {
+    display: none;
+    color: #ef4444;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.error-msg.visible {
+    display: block;
+}
+
+.form-feedback {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-weight: 700;
+    display: none;
+}
+
+.form-feedback.success {
+    display: block;
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.form-feedback.error {
+    display: block;
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
 /* About Page */
 .about-content {
     max-width: 800px;

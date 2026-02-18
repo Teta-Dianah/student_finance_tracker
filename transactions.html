@@ -62,78 +62,16 @@
                     </div>
                 </div>
 
-                <div class="transaction-list glass box-glow" style="padding: var(--spacing-md)">
-                    <!-- Example Data -->
-
-                    <!-- Normal Row -->
-                    <div class="transaction-item">
-                        <span class="txn-tag category-food">Food</span>
-                        <div class="txn-details">
-                            <p class="txn-desc">Lunch at Cafeteria</p>
-                            <p class="txn-date">Today, 12:30 PM</p>
-                        </div>
-                        <div class="txn-amount negative">-$12.50</div>
-                        <div class="txn-actions">
-                            <button class="btn-action edit">Edit</button>
-                            <button class="btn-action delete">Delete</button>
-                        </div>
-                    </div>
-
-                    <!-- Inline Edit Mode Demo -->
-                    <div class="transaction-item editing">
-                        <div class="txn-details" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <select style="padding: 5px; border-radius: 4px; font-size: 0.8rem;">
-                                <option value="transport" selected>Trans</option>
-                                <option value="food">Food</option>
-                            </select>
-                            <input type="text" value="Bus Pass"
-                                style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9rem; width: 120px;">
-                            <input type="text" value="Yesterday"
-                                style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.8rem; width: 80px;">
-                        </div>
-                        <input type="text" value="-45.00"
-                            style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-weight: 800; font-family: monospace; width: 80px; text-align: right;">
-                        <div class="txn-actions">
-                            <button class="btn-action"
-                                style="background: var(--accent-success); color: white; border: none;">Save</button>
-                            <button class="btn-action"
-                                style="background: #94a3b8; color: white; border: none;">Cancel</button>
-                        </div>
-                    </div>
-
-                    <!-- Delete Confirmation Demo -->
-                    <div class="transaction-item deleting">
-                        <span class="txn-tag category-books">Books</span>
-                        <div class="txn-details">
-                            <p class="txn-desc" style="text-decoration: line-through; opacity: 0.5;">Chemistry Textbook
-                            </p>
-                            <p class="txn-date">Sep 23</p>
-                        </div>
-                        <div class="txn-amount negative" style="opacity: 0.5;">-$89.99</div>
-                        <div class="txn-actions" style="display: flex; align-items: center; gap: 5px;">
-                            <span style="font-size: 0.7rem; color: #ef4444; font-weight: 700;">Confirm?</span>
-                            <button class="btn-action"
-                                style="background: #ef4444; color: white; border: none;">Yes</button>
-                            <button class="btn-action">No</button>
-                        </div>
-                    </div>
-
-                    <div class="transaction-item">
-                        <span class="txn-tag category-entertainment">Entert</span>
-                        <div class="txn-details">
-                            <p class="txn-desc">Coffee with Friends</p>
-                            <p class="txn-date">Sep 28</p>
-                        </div>
-                        <div class="txn-amount negative">-$8.75</div>
-                        <div class="txn-actions">
-                            <button class="btn-action edit">Edit</button>
-                            <button class="btn-action delete">Delete</button>
-                        </div>
-                    </div>
+                <div id="transaction-list" class="transaction-list glass box-glow" style="padding: var(--spacing-md)">
+                    <!-- Transactions will be loaded here -->
                 </div>
             </section>
         </main>
     </div>
-</body>
-</html>
 
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/transactions.js"></script>
+</body>
+
+</html>
