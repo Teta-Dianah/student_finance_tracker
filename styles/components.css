@@ -2,10 +2,10 @@
 
 /* Glassmorphism Refined for Visibility */
 .glass {
-    background: rgba(255, 255, 255, 0.85);
-    /* Higher opacity for better text contrast */
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
     border-radius: var(--radius-md);
 }
 
@@ -105,16 +105,23 @@
 }
 
 .avatar {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    background: var(--text-primary);
+    background: linear-gradient(135deg, var(--accent-primary), #0d9488);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 0.9rem;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
+    border: 2px solid var(--glass-border);
+    transition: transform var(--transition-fast);
+}
+
+.avatar:hover {
+    transform: scale(1.05);
 }
 
 /* Section Headers */
@@ -257,7 +264,7 @@
     flex-direction: column;
     justify-content: space-between;
     font-size: 0.6rem;
-    color: #94a3b8;
+    color: var(--text-secondary);
     pointer-events: none;
 }
 
@@ -281,7 +288,8 @@
     align-items: center;
     padding: 24px 32px;
     /* Increased padding */
-    background: white;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
     gap: 30px;
     /* Increased gap */
@@ -398,11 +406,12 @@
 
 /* Controls */
 .controls-bar {
-    background: white;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-md);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    box-shadow: var(--glass-shadow);
 }
 
 input,
@@ -417,9 +426,10 @@ button {
     max-width: 800px;
     /* Increased from 700px */
     margin: 40px auto;
-    background: white;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--glass-shadow);
 }
 
 .form-group {
@@ -446,22 +456,29 @@ label {
     letter-spacing: 0.5px;
     font-size: 0.75rem;
     font-weight: 700;
+    color: var(--text-primary);
 }
 
 input,
 select {
     width: 100%;
-    padding: 12px 16px;
-    border-radius: var(--radius-sm);
-    border: 1px solid #e2e8f0;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
     font-size: 1rem;
     transition: all var(--transition-fast);
-    background: #f8fafc;
+    background: var(--input-bg);
+    color: var(--text-primary);
+}
+
+input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
 }
 
 input:focus,
 select:focus {
-    background: white;
+    background: var(--input-focus-bg);
     border-color: var(--accent-primary);
     box-shadow: 0 0 0 4px rgba(0, 128, 128, 0.1);
     outline: none;
@@ -470,23 +487,31 @@ select:focus {
 input.valid,
 select.valid {
     border-color: var(--accent-success);
-    background: #f0fdf4;
+    background: rgba(39, 174, 96, 0.1);
 }
 
 input.valid:focus,
 select.valid:focus {
-    box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.1);
+    box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.2);
+}
+
+/* Compact Inputs (for Settings/Headers) */
+.input-small {
+    width: auto !important;
+    padding: 8px 12px !important;
+    font-size: 0.9rem !important;
+    border-radius: 6px !important;
 }
 
 input.invalid,
 select.invalid {
     border-color: var(--accent-danger);
-    background: #fef2f2;
+    background: rgba(231, 76, 60, 0.1);
 }
 
 input.invalid:focus,
 select.invalid:focus {
-    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
+    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
 }
 
 .error-msg {
@@ -512,14 +537,14 @@ select.invalid:focus {
 
 .form-feedback.success {
     display: block;
-    background: #dcfce7;
-    color: #15803d;
+    background: var(--accent-success);
+    color: white;
 }
 
 .form-feedback.error {
     display: block;
-    background: #fee2e2;
-    color: #b91c1c;
+    background: var(--accent-danger);
+    color: white;
 }
 
 /* Primary Button */
@@ -611,8 +636,9 @@ select.invalid:focus {
     justify-content: space-between;
     align-items: center;
     padding: var(--spacing-md);
-    background: #f8fafc;
+    background: var(--bg-secondary);
     border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-border);
     margin-bottom: var(--spacing-sm);
     gap: var(--spacing-md);
 }
@@ -659,11 +685,11 @@ select.invalid:focus {
 
 .transaction-item.editing {
     border: 2px solid var(--accent-primary);
-    background: #f0f9ff;
+    background: var(--glass-bg);
 }
 
 .transaction-item.deleting {
-    background: #fef2f2;
+    background: rgba(239, 68, 68, 0.1);
     border: 1px solid #ef4444;
 }
 
@@ -680,7 +706,7 @@ select.invalid:focus {
 .about-feature {
     margin-bottom: var(--spacing-lg);
     padding-bottom: var(--spacing-lg);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .about-feature h3 {
@@ -708,8 +734,8 @@ select.invalid:focus {
         transform: none;
         width: 250px;
         height: 100vh;
-        background: white;
-        border-right: 1px solid rgba(0, 0, 0, 0.05);
+        background: var(--bg-primary);
+        border-right: 1px solid var(--glass-border);
         border-radius: 0;
         box-shadow: none;
         padding: 0;

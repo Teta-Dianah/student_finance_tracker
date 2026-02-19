@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/components.css">
     <link rel="stylesheet" href="styles/animations.css">
+
+    <!-- Theme Manager (Immediate) -->
+    <script src="js/theme.js"></script>
 </head>
 
 <body>
@@ -57,8 +60,7 @@
                                 <h4>Your Name</h4>
                                 <p>How should we address you in the dashboard?</p>
                             </div>
-                            <input type="text" id="user-name-input" placeholder="e.g. Alex"
-                                style="width: auto; padding: 5px 10px; background: white; border: 1px solid #e2e8f0; border-radius: 4px;">
+                            <input type="text" id="user-name-input" placeholder="e.g. Alex" class="input-small">
                         </div>
 
                         <div class="setting-item">
@@ -66,7 +68,10 @@
                                 <h4>Dark Mode</h4>
                                 <p>Switch to a dimmer theme for nighttime</p>
                             </div>
-                            <input type="checkbox" id="dark-mode-toggle" style="width: 20px; height: 20px;">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="dark-mode-toggle">
+                                <span class="slider"></span>
+                            </label>
                         </div>
                     </div>
 
@@ -82,7 +87,7 @@
                             <div style="display: flex; align-items: center; gap: 5px;">
                                 <span>$</span>
                                 <input type="number" id="budget-input" placeholder="600.00" step="0.01"
-                                    style="width: 100px; padding: 5px 10px; background: white; border: 1px solid #e2e8f0; border-radius: 4px;">
+                                    class="input-small" style="width: 100px;">
                             </div>
                         </div>
                     </div>
@@ -96,21 +101,14 @@
                                 <h4>Currency</h4>
                                 <p>Which symbol should appear next to amounts?</p>
                             </div>
-                            <select id="currency-select" style="width: auto; padding: 5px 10px; background: white;">
+                            <select id="currency-select" class="input-small">
                                 <option value="USD">USD ($)</option>
                                 <option value="EUR">EUR (€)</option>
                                 <option value="GBP">GBP (£)</option>
-                                <option value="RWF">RWF (R)</option>
+                                <option value="RWF">RWF (RWF)</option>
                             </select>
                         </div>
 
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Compact Mode</h4>
-                                <p>Reduce spacing for a denser view</p>
-                            </div>
-                            <input type="checkbox" id="compact-toggle" style="width: 20px; height: 20px;">
-                        </div>
                     </div>
 
                     <!-- Data Management -->
@@ -128,7 +126,7 @@
 
                         <div class="setting-item" style="background: transparent; padding-left: 0; padding-right: 0;">
                             <div class="setting-info">
-                                <h4>Reset Database</h4>
+                                <h4 style="color: #ef4444;">Reset Database</h4>
                                 <p>Permanently delete all transaction history</p>
                             </div>
                             <button class="btn-danger">Clear Everything</button>
@@ -139,6 +137,8 @@
             </section>
         </main>
     </div>
+    <script src="js/storage.js"></script>
+    <script src="js/settings.js"></script>
 </body>
 
 </html>

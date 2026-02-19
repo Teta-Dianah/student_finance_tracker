@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const budgetSpentText = document.getElementById('budget-spent-text');
     const budgetLimitText = document.getElementById('budget-limit-text');
 
-    const MONTHLY_BUDGET = 600.00;
-
     function updateDashboard() {
         const transactions = window.Storage.getTransactions();
+        const settings = window.Storage.getSettings();
+        const MONTHLY_BUDGET = settings.monthlyBudget;
 
         // 1. Total Records
         if (totalRecordsEl) totalRecordsEl.textContent = transactions.length;
@@ -59,13 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Progress bar logic: Total Expenses relative to Total Income
         const spendingPercentage = totalIncome > 0 ? Math.min(100, (totalExpenses / totalIncome) * 100) : 0;
 
-        // Update Stat Cards
-        const currencyOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-        if (totalBalanceEl) totalBalanceEl.textContent = `$${totalIncome.toLocaleString(undefined, currencyOptions)}`;
-        if (totalExpensesEl) totalExpensesEl.textContent = `$${totalExpenses.toLocaleString(undefined, currencyOptions)}`;
-        if (remainingAmountEl) remainingAmountEl.textContent = `$${remainingAmount.toLocaleString(undefined, currencyOptions)}`;
+        // Update Stat Cards (Using Global Formatter)
+        if (totalBalanceEl) totalBalanceEl.textContent = window.Storage.formatCurrency(totalIncome);
+        if (totalExpensesEl) totalExpensesEl.textContent = window.Storage.formatCurrency(totalExpenses);
+        if (remainingAmountEl) remainingAmountEl.textContent = window.Storage.formatCurrency(remainingAmount);
 
-        // Update Budget Gap Section (Relative to total balance/income)
+        // Update Budget Gap Section
         if (budgetProgressBar) {
             budgetProgressBar.style.width = `${spendingPercentage}%`;
             // Change color if spending is heavy relative to income
@@ -78,10 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         if (budgetSpentText) {
-            budgetSpentText.textContent = `Total Spent: $${totalExpenses.toLocaleString(undefined, currencyOptions)}`;
+            budgetSpentText.textContent = `Total Spent: ${window.Storage.formatCurrency(totalExpenses)}`;
         }
         if (budgetLimitText) {
-            budgetLimitText.textContent = `Total Income: $${totalIncome.toLocaleString(undefined, currencyOptions)}`;
+            budgetLimitText.textContent = `Total Income: ${window.Storage.formatCurrency(totalIncome)}`;
         }
 
         // 4. Top Category (Highest transaction count)
@@ -165,8 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const ySpans = yAxis.querySelectorAll('span');
+        const symbol = window.Storage.getCurrencySymbol();
         labels.forEach((val, i) => {
-            if (ySpans[i]) ySpans[i].textContent = `$${val}`;
+            if (ySpans[i]) ySpans[i].textContent = `${symbol}${val}`;
         });
 
         const oldBarWrappers = trendContainer.querySelectorAll('.trend-bar-wrapper');
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 : `style="height: ${height}%;"`;
 
             barWrapper.innerHTML = `
-                <div class="trend-bar" ${barStyle} data-value="$${day.total.toFixed(2)}"></div>
+                <div class="trend-bar" ${barStyle} data-value="${window.Storage.formatCurrency(day.total)}"></div>
                 <span class="trend-day">${day.dayName}</span>
             `;
             trendContainer.appendChild(barWrapper);

@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="txn-desc">${txn.description}</p>
                 <p class="txn-date">${txn.date}</p>
             </div>
-            <div class="txn-amount ${amountClass}">$${txn.amount.toFixed(2)}</div>
+            <div class="txn-amount ${amountClass}">${window.Storage.formatCurrency(txn.amount)}</div>
             <div class="txn-actions">
                 <button class="btn-action edit">Edit</button>
                 <button class="btn-action delete">Delete</button>

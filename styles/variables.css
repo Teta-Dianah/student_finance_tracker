@@ -49,4 +49,39 @@
     /* Transitions */
     --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --transition-normal: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* Input Backgrounds */
+    --input-bg: var(--bg-secondary);
+    --input-focus-bg: white;
+}
+
+/* Dark Mode Overrides */
+:root.dark-mode {
+    --bg-primary: #0B0E14;
+    /* Deep Navy Black */
+    --bg-secondary: #161B22;
+    /* Navy Slate Card Background */
+
+    --text-primary: #FFFFFF;
+    /* Pure White */
+    --text-secondary: #E6EDF3;
+    /* High-Visibility Light Slate */
+    --text-accent: #79C0FF;
+    /* High-Visibility Accent Blue */
+
+    --accent-primary: #5EEAD4;
+    /* Bright Mint Teal */
+    --accent-secondary: #38bdf8;
+    --accent-success: #4ade80;
+    --accent-danger: #f87171;
+    --accent-warning: #fbbf24;
+
+    /* Input Overrides */
+    --input-bg: #161B22;
+    --input-focus-bg: #0B0E14;
+
+    /* Glassmorphism - Dark Mode - Maximum Clarity */
+    --glass-bg: rgba(22, 27, 34, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
