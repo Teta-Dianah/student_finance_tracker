@@ -17,56 +17,85 @@ document.addEventListener('DOMContentLoaded', () => {
     const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
     const categoryRegex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 
-    // Helper to show error
-    const showError = (elementId, message) => {
-        const errorSpan = document.getElementById(elementId);
-        if (errorSpan) {
-            errorSpan.textContent = message;
-            errorSpan.classList.add('visible');
+    // Helper to show/hide error messages
+    const showError = (id, msg) => {
+        const errorEl = document.getElementById(id);
+        if (errorEl) {
+            errorEl.textContent = msg;
+            errorEl.classList.add('visible');
         }
     };
 
-    // Helper to hide error
-    const hideError = (elementId) => {
-        const errorSpan = document.getElementById(elementId);
-        if (errorSpan) {
-            errorSpan.textContent = '';
-            errorSpan.classList.remove('visible');
+    const hideError = (id) => {
+        const errorEl = document.getElementById(id);
+        if (errorEl) {
+            errorEl.textContent = '';
+            errorEl.classList.remove('visible');
         }
+    };
+
+    // Helper to update field UI
+    const updateFieldUI = (inputElement, isValid, errorId, errorMessage) => {
+        if (isValid) {
+            inputElement.classList.remove('invalid');
+            inputElement.classList.add('valid');
+            hideError(errorId);
+        } else {
+            inputElement.classList.remove('valid');
+            inputElement.classList.add('invalid');
+            if (errorMessage) {
+                showError(errorId, errorMessage);
+            }
+        }
+    };
+
+    // Dynamic Categories Logic
+    const categoryOptions = {
+        Expense: ['Food', 'Transport', 'Books', 'Entertainment', 'Other'],
+        Income: ['Salary', 'Allowance', 'Gift', 'Other']
+    };
+
+    const updateCategoryOptions = (type) => {
+        const options = categoryOptions[type] || [];
+        categorySelect.innerHTML = '<option value="" disabled selected>Select a category</option>';
+        options.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.textContent = cat;
+            categorySelect.appendChild(option);
+        });
+        // Clear category error and validity state when type changes
+        categorySelect.classList.remove('valid', 'invalid');
+        hideError('category-error');
     };
 
     // Real-time validation listeners
     descInput.addEventListener('input', () => {
-        if (descriptionRegex.test(descInput.value.trim())) {
-            hideError('desc-error');
-        } else {
-            showError('desc-error', 'Description must contain letters and not be numbers only.');
-        }
+        const isValid = descriptionRegex.test(descInput.value.trim());
+        updateFieldUI(descInput, isValid, 'desc-error', 'Description must contain letters and not be numbers only.');
     });
 
     amountInput.addEventListener('input', () => {
-        if (amountRegex.test(amountInput.value.trim())) {
-            hideError('amount-error');
-        } else {
-            showError('amount-error', 'Use a valid number (e.g., 10 or 10.50).');
-        }
+        const isValid = amountRegex.test(amountInput.value.trim());
+        updateFieldUI(amountInput, isValid, 'amount-error', 'Use a valid number (e.g., 10 or 10.50).');
+    });
+
+    typeSelect.addEventListener('change', () => {
+        updateCategoryOptions(typeSelect.value);
     });
 
     categorySelect.addEventListener('change', () => {
-        if (categoryRegex.test(categorySelect.value)) {
-            hideError('category-error');
-        } else {
-            showError('category-error', 'Please select a valid category.');
-        }
+        const isValid = categoryRegex.test(categorySelect.value);
+        updateFieldUI(categorySelect, isValid, 'category-error', 'Please select a valid category.');
     });
 
     dateInput.addEventListener('change', () => {
-        if (dateInput.value) {
-            hideError('date-error');
-        } else {
-            showError('date-error', 'Date is required.');
-        }
+        const isValid = !!dateInput.value;
+        updateFieldUI(dateInput, isValid, 'date-error', 'Date is required.');
     });
+
+    // Initialize categories on load
+    updateCategoryOptions(typeSelect.value);
 
     // Helper to clear errors
     const clearErrors = () => {
@@ -74,13 +103,15 @@ document.addEventListener('DOMContentLoaded', () => {
             span.textContent = '';
             span.classList.remove('visible');
         });
+        document.querySelectorAll('input, select').forEach(el => {
+            el.classList.remove('valid', 'invalid');
+        });
         feedback.textContent = '';
         feedback.className = 'form-feedback';
     };
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        clearErrors();
 
         const desc = descInput.value.trim();
         const amount = amountInput.value.trim();
@@ -88,29 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const category = categorySelect.value;
         const date = dateInput.value;
 
-        let isValid = true;
+        // Final validation check
+        const isDescValid = descriptionRegex.test(desc);
+        const isAmountValid = amountRegex.test(amount);
+        const isCategoryValid = categoryRegex.test(category);
+        const isDateValid = !!date;
 
-        if (!descriptionRegex.test(desc)) {
-            showError('desc-error', 'Description must contain letters and not be numbers only.');
-            isValid = false;
-        }
+        updateFieldUI(descInput, isDescValid, 'desc-error', 'Description must contain letters and not be numbers only.');
+        updateFieldUI(amountInput, isAmountValid, 'amount-error', 'Use a valid number (e.g., 10 or 10.50).');
+        updateFieldUI(categorySelect, isCategoryValid, 'category-error', 'Please select a valid category.');
+        updateFieldUI(dateInput, isDateValid, 'date-error', 'Date is required.');
 
-        if (!amountRegex.test(amount)) {
-            showError('amount-error', 'Use a valid number (e.g., 10 or 10.50).');
-            isValid = false;
-        }
-
-        if (!categoryRegex.test(category)) {
-            showError('category-error', 'Please select a valid category.');
-            isValid = false;
-        }
-
-        if (!date) {
-            showError('date-error', 'Date is required.');
-            isValid = false;
-        }
-
-        if (!isValid) {
+        if (!isDescValid || !isAmountValid || !isCategoryValid || !isDateValid) {
             feedback.textContent = 'Please fix the errors highlighted above.';
             feedback.classList.add('error');
             return; // Stop here if invalid

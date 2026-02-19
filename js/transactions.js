@@ -166,6 +166,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             <option value="Transport" ${txn.category === 'Transport' ? 'selected' : ''}>Transport</option>
                             <option value="Books" ${txn.category === 'Books' ? 'selected' : ''}>Books</option>
                             <option value="Entertainment" ${txn.category === 'Entertainment' ? 'selected' : ''}>Entertainment</option>
+                            <option value="Salary" ${txn.category === 'Salary' ? 'selected' : ''}>Salary</option>
+                            <option value="Allowance" ${txn.category === 'Allowance' ? 'selected' : ''}>Allowance</option>
+                            <option value="Gift" ${txn.category === 'Gift' ? 'selected' : ''}>Gift</option>
                             <option value="Other" ${txn.category === 'Other' ? 'selected' : ''}>Other</option>
                         </select>
                     </div>

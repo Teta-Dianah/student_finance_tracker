@@ -338,6 +338,25 @@
     border: 1px solid #cbd5e1;
 }
 
+/* Income Categories Stylings */
+.category-salary {
+    background: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+}
+
+.category-allowance {
+    background: #ccfbf1;
+    color: #0d9488;
+    border: 1px solid #5eead4;
+}
+
+.category-gift {
+    background: #ecfdf5;
+    color: #047857;
+    border: 1px solid #6ee7b7;
+}
+
 
 .txn-details {
     flex: 1;
@@ -443,6 +462,31 @@ select {
 input:focus,
 select:focus {
     background: white;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 4px rgba(0, 128, 128, 0.1);
+    outline: none;
+}
+
+input.valid,
+select.valid {
+    border-color: var(--accent-success);
+    background: #f0fdf4;
+}
+
+input.valid:focus,
+select.valid:focus {
+    box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.1);
+}
+
+input.invalid,
+select.invalid {
+    border-color: var(--accent-danger);
+    background: #fef2f2;
+}
+
+input.invalid:focus,
+select.invalid:focus {
+    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
 }
 
 .error-msg {
