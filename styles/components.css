@@ -359,7 +359,22 @@
     font-weight: 800;
     font-size: 1.1rem;
     font-family: monospace;
-    /* For number alignment */
+}
+
+.txn-amount.negative {
+    color: var(--accent-danger);
+}
+
+.txn-amount.positive {
+    color: var(--accent-success);
+}
+
+.txn-amount.negative::before {
+    content: '-';
+}
+
+.txn-amount.positive::before {
+    content: '+';
 }
 
 /* Controls */
@@ -380,7 +395,8 @@ button {
 /* Forms */
 .form-container {
     padding: var(--spacing-xl);
-    max-width: 700px;
+    max-width: 800px;
+    /* Increased from 700px */
     margin: 40px auto;
     background: white;
     border-radius: var(--radius-lg);
@@ -532,6 +548,69 @@ select:focus {
 .btn-action.delete:hover {
     background: #ef4444;
     color: white;
+}
+
+/* Settings Simplified - More Human, Less Template */
+.settings-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.settings-section h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: #f8fafc;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-sm);
+    gap: var(--spacing-md);
+}
+
+.setting-info {
+    flex: 1;
+}
+
+.setting-info h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.setting-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Cleaner, Standard Checkbox Styling */
+.setting-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--accent-primary);
+}
+
+/* Simple Danger Link/Button */
+.btn-danger {
+    background: transparent;
+    color: #ef4444;
+    text-decoration: underline;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.btn-danger:hover {
+    color: #b91c1c;
 }
 
 .transaction-item.editing {

@@ -91,13 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
         div.className = 'transaction-item';
         div.dataset.id = txn.id;
 
+        const amountClass = txn.type === 'Income' ? 'positive' : 'negative';
+
         div.innerHTML = `
             <span class="txn-tag category-${txn.category.toLowerCase()}">${txn.category.substring(0, 6)}</span>
             <div class="txn-details">
                 <p class="txn-desc">${txn.description}</p>
                 <p class="txn-date">${txn.date}</p>
             </div>
-            <div class="txn-amount negative">-$${txn.amount.toFixed(2)}</div>
+            <div class="txn-amount ${amountClass}">$${txn.amount.toFixed(2)}</div>
             <div class="txn-actions">
                 <button class="btn-action edit">Edit</button>
                 <button class="btn-action delete">Delete</button>
@@ -154,13 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
         row.innerHTML = `
             <div class="txn-details" style="display: flex; gap: 10px; flex-wrap: wrap; width: 100%;">
                 <div style="flex: 1; display: flex; flex-direction: column; gap: 5px;">
-                    <select class="edit-category" style="padding: 5px; border-radius: 4px; font-size: 0.8rem;">
-                        <option value="Food" ${txn.category === 'Food' ? 'selected' : ''}>Food</option>
-                        <option value="Transport" ${txn.category === 'Transport' ? 'selected' : ''}>Transport</option>
-                        <option value="Books" ${txn.category === 'Books' ? 'selected' : ''}>Books</option>
-                        <option value="Entertainment" ${txn.category === 'Entertainment' ? 'selected' : ''}>Entertainment</option>
-                        <option value="Other" ${txn.category === 'Other' ? 'selected' : ''}>Other</option>
-                    </select>
+                    <div style="display: flex; gap: 5px;">
+                        <select class="edit-type" style="padding: 5px; border-radius: 4px; font-size: 0.8rem; flex: 1;">
+                            <option value="Expense" ${txn.type === 'Expense' ? 'selected' : ''}>Expense</option>
+                            <option value="Income" ${txn.type === 'Income' ? 'selected' : ''}>Income</option>
+                        </select>
+                        <select class="edit-category" style="padding: 5px; border-radius: 4px; font-size: 0.8rem; flex: 2;">
+                            <option value="Food" ${txn.category === 'Food' ? 'selected' : ''}>Food</option>
+                            <option value="Transport" ${txn.category === 'Transport' ? 'selected' : ''}>Transport</option>
+                            <option value="Books" ${txn.category === 'Books' ? 'selected' : ''}>Books</option>
+                            <option value="Entertainment" ${txn.category === 'Entertainment' ? 'selected' : ''}>Entertainment</option>
+                            <option value="Other" ${txn.category === 'Other' ? 'selected' : ''}>Other</option>
+                        </select>
+                    </div>
                     <input type="text" class="edit-desc" value="${txn.description}" 
                            style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 0.9rem;">
                     <input type="date" class="edit-date" value="${txn.date}"
@@ -183,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const errorDiv = row.querySelector('.edit-errors');
 
         saveBtn.addEventListener('click', () => {
+            const newType = row.querySelector('.edit-type').value;
             const newCat = row.querySelector('.edit-category').value;
             const newDesc = row.querySelector('.edit-desc').value.trim();
             const newDate = row.querySelector('.edit-date').value;
@@ -200,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const updatedData = {
+                type: newType,
                 category: newCat,
                 description: newDesc,
                 date: newDate,

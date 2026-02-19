@@ -44,69 +44,94 @@
                 </div>
             </header>
 
-            <!-- Settings Section -->       
+            <!-- Settings Section -->
             <section id="settings" class="view-section">
                 <div class="form-container glass box-glow">
 
+                    <!-- Personalization -->
+                    <div class="settings-section">
+                        <h3>Personalization</h3>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Your Name</h4>
+                                <p>How should we address you in the dashboard?</p>
+                            </div>
+                            <input type="text" id="user-name-input" placeholder="e.g. Alex"
+                                style="width: auto; padding: 5px 10px; background: white; border: 1px solid #e2e8f0; border-radius: 4px;">
+                        </div>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Dark Mode</h4>
+                                <p>Switch to a dimmer theme for nighttime</p>
+                            </div>
+                            <input type="checkbox" id="dark-mode-toggle" style="width: 20px; height: 20px;">
+                        </div>
+                    </div>
+
+                    <!-- Financial Goals -->
+                    <div class="settings-section">
+                        <h3>Financial Goals</h3>
+
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h4>Monthly Budget</h4>
+                                <p>Set a spending limit for the progress bar</p>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <span>$</span>
+                                <input type="number" id="budget-input" placeholder="600.00" step="0.01"
+                                    style="width: 100px; padding: 5px 10px; background: white; border: 1px solid #e2e8f0; border-radius: 4px;">
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Preferences -->
                     <div class="settings-section">
-                        <h3>Preferences</h3>
+                        <h3>General Preferences</h3>
 
                         <div class="setting-item">
                             <div class="setting-info">
                                 <h4>Currency</h4>
-                                <p>Select your preferred currency symbol</p>
+                                <p>Which symbol should appear next to amounts?</p>
                             </div>
-                            <div style="width: 120px;">
-                                <select id="currency-select" aria-label="Select Currency">
-                                    <option value="USD">USD ($)</option>
-                                    <option value="EUR">EUR (€)</option>
-                                    <option value="GBP">GBP (£)</option>
-                                    <option value="RWF">RWF (R)</option>
-                                </select>
-                            </div>
+                            <select id="currency-select" style="width: auto; padding: 5px 10px; background: white;">
+                                <option value="USD">USD ($)</option>
+                                <option value="EUR">EUR (€)</option>
+                                <option value="GBP">GBP (£)</option>
+                                <option value="RWF">RWF (R)</option>
+                            </select>
                         </div>
 
                         <div class="setting-item">
                             <div class="setting-info">
                                 <h4>Compact Mode</h4>
-                                <p>Reduce spacing in lists</p>
+                                <p>Reduce spacing for a denser view</p>
                             </div>
-                            <label class="toggle-switch">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
+                            <input type="checkbox" id="compact-toggle" style="width: 20px; height: 20px;">
                         </div>
                     </div>
 
                     <!-- Data Management -->
                     <div class="settings-section">
-                        <h3>Data Management</h3>
+                        <h3>Data & Storage</h3>
 
                         <div class="setting-item">
                             <div class="setting-info">
-                                <h4>Export Data</h4>
-                                <p>Download all transactions as JSON</p>
+                                <h4>Export Library</h4>
+                                <p>Download your records to a JSON file</p>
                             </div>
                             <button class="btn-primary"
-                                style="width: auto; padding: 10px 20px; font-size: 0.9rem;">Export</button>
+                                style="width: auto; padding: 8px 16px; margin: 0; font-size: 0.85rem;">Export</button>
                         </div>
 
-                        <div class="setting-item">
+                        <div class="setting-item" style="background: transparent; padding-left: 0; padding-right: 0;">
                             <div class="setting-info">
-                                <h4>Import Data</h4>
-                                <p>Restore from backup file</p>
+                                <h4>Reset Database</h4>
+                                <p>Permanently delete all transaction history</p>
                             </div>
-                            <button class="btn-primary"
-                                style="width: auto; padding: 10px 20px; font-size: 0.9rem; background: #e2e8f0; color: #334155;">Import</button>
-                        </div>
-
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Clear All Data</h4>
-                                <p>Permanently delete all records</p>
-                            </div>
-                            <button class="btn-danger">Clear Data</button>
+                            <button class="btn-danger">Clear Everything</button>
                         </div>
                     </div>
 
