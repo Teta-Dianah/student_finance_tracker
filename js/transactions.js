@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const category = categoryFilter.value;
         const sortBy = sortSelect.value;
         const searchStatus = document.getElementById('search-status');
-        const isCaseSensitive = document.getElementById('case-sensitive-toggle').checked;
+        const isCaseSensitive = false; // Default to case-insensitive
 
         let filtered = window.Storage.getTransactions();
         const regex = compileRegex(query, isCaseSensitive);
@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', filterAndSortTransactions);
     categoryFilter.addEventListener('change', filterAndSortTransactions);
     sortSelect.addEventListener('change', filterAndSortTransactions);
-    document.getElementById('case-sensitive-toggle').addEventListener('change', filterAndSortTransactions);
 
     //Render the list of transaction
     function renderTransactions(transactionsToRender, highlightRegex) {

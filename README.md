@@ -2,12 +2,28 @@
 
 A privacy-focused, responsive web application for managing student finances. Built with Vanilla HTML, CSS, and JavaScript.
 
+**Live Demo**: [teta-dianah.github.io/student_finance_tracker](http://teta-dianah.github.io/student_finance_tracker)
+
+**Youtube link**: [https://youtu.be/o6RaH6rqJQk]
+
+## Design Sketches
+Below are the original hand-drawn/digital sketches used to plan the responsive layout.
+
+### Desktop View
+![Desktop Dashboard Sketch](assets/Desktop%20sketch%20dashboard.png)
+
+### Tablet View
+![Tablet Dashboard Sketch](assets/Tablet%20sketch%20dashboard.png)
+
+### Mobile View
+![Mobile Dashboard Sketch](assets/mobile%20sketch%20dashboard.png)
+
 ## Features
 - **Dashboard**: High-level overview of total balance, expenses, remaining funds, and top spending category.
 - **Expenditure Trend**: Responsive 7-day bar chart showing daily spending.
 - **Budget Management**: Set a monthly limit and receive visual/ARIA-live warnings when exceeded.
 - **Transactions**: Full CRUD (Create, Read, Update, Delete) capability with local persistence.
-- **Search & Sort**: Live Regex-powered search with text highlighting, **case-sensitivity toggle**, and multiple sorting options.
+- **Search & Sort**: Live Regex-powered search with text highlighting and multiple sorting options.
 - **Currency Support**: Support for GBP (Base), USD, and RWF with **manual exchange rates** editable in Settings.
 - **A11y First**: Semantic landmarks, skip-to-content links, visible focus states, and ARIA live regions.
 - **Theming**: Dark and Light mode support with local persistence.
