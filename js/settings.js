@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const budgetInput = document.getElementById('budget-input');
     const userNameInput = document.getElementById('user-name-input');
 
-    const exportBtn = document.querySelector('button.btn-primary'); 
-    const clearBtn = document.querySelector('button.btn-danger'); 
+    const exportBtn = document.querySelector('button.btn-primary');
+    const clearBtn = document.querySelector('button.btn-danger');
 
     const dataSection = exportBtn.closest('.settings-section');
     const importItem = document.createElement('div');
@@ -128,7 +128,30 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsText(file);
     });
 
-    // 8. Data Management: Reset
+    // 8. Manual Exchange Rates
+    const rateGbp = document.getElementById('rate-gbp');
+    const rateEur = document.getElementById('rate-eur');
+    const rateRwf = document.getElementById('rate-rwf');
+
+    const rates = settings.exchangeRates;
+    rateGbp.value = rates['GBP'];
+    rateEur.value = rates['EUR'];
+    rateRwf.value = rates['RWF'];
+
+    const saveRates = () => {
+        const newRates = {
+            'GBP': parseFloat(rateGbp.value) || rates['GBP'],
+            'EUR': parseFloat(rateEur.value) || rates['EUR'],
+            'RWF': parseFloat(rateRwf.value) || rates['RWF']
+        };
+        window.Storage.saveSettings({ exchangeRates: newRates });
+    };
+
+    rateGbp.addEventListener('change', saveRates);
+    rateEur.addEventListener('change', saveRates);
+    rateRwf.addEventListener('change', saveRates);
+
+    // 9. Data Management: Reset
     clearBtn.addEventListener('click', () => {
         if (confirm('Are you absolutely sure? This will wipe ALL transactions and settings permanently.')) {
             window.Storage.clearAll();

@@ -14,36 +14,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
     const categoryRegex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 
-    //Render the list of transaction
-    function renderTransactions(transactionsToRender) {
-        const transactions = transactionsToRender || window.Storage.getTransactions();
-        listContainer.innerHTML = '';
+    // Regex Search Highlight Utility
+    function highlight(text, re) {
+        if (!re) return text;
+        return text.replace(re, m => `<mark>${m}</mark>`);
+    }
 
-        if (transactions.length === 0) {
-            listContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No transactions found.</p>';
-            return;
+    // Safe Regex Compiler
+    function compileRegex(input, isCaseSensitive) {
+        try {
+            const flags = isCaseSensitive ? 'g' : 'gi';
+            return input ? new RegExp(input, flags) : null;
+        } catch (e) {
+            return null;
         }
-
-        transactions.forEach(txn => {
-            const item = createTransactionItem(txn);
-            listContainer.appendChild(item);
-        });
     }
 
     //Filter and Sort Transactions logic
     function filterAndSortTransactions() {
-        const query = searchInput.value.toLowerCase();
+        const query = searchInput.value.trim();
         const category = categoryFilter.value;
         const sortBy = sortSelect.value;
+        const searchStatus = document.getElementById('search-status');
+        const isCaseSensitive = document.getElementById('case-sensitive-toggle').checked;
 
         let filtered = window.Storage.getTransactions();
+        const regex = compileRegex(query, isCaseSensitive);
 
-        // 1. Search Filter
+        // 1. Search Filter (Regex supported)
         if (query) {
-            filtered = filtered.filter(txn =>
-                txn.description.toLowerCase().includes(query) ||
-                txn.category.toLowerCase().includes(query)
-            );
+            if (regex) {
+                filtered = filtered.filter(txn =>
+                    regex.test(txn.description) ||
+                    regex.test(txn.category)
+                );
+            } else {
+                // Fallback to basic include if regex is malformed
+                const lowerQuery = query.toLowerCase();
+                filtered = filtered.filter(txn =>
+                    txn.description.toLowerCase().includes(lowerQuery) ||
+                    txn.category.toLowerCase().includes(lowerQuery)
+                );
+            }
         }
 
         // 2. Category Filter
@@ -71,27 +83,49 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        renderTransactions(filtered);
+        // Update ARIA live region for results count
+        if (searchStatus) {
+            searchStatus.textContent = `${filtered.length} transactions found.`;
+        }
+
+        renderTransactions(filtered, regex);
     }
 
     // Event Listeners for Live Search, Filter and Sort
     searchInput.addEventListener('input', filterAndSortTransactions);
     categoryFilter.addEventListener('change', filterAndSortTransactions);
     sortSelect.addEventListener('change', filterAndSortTransactions);
+    document.getElementById('case-sensitive-toggle').addEventListener('change', filterAndSortTransactions);
+
+    //Render the list of transaction
+    function renderTransactions(transactionsToRender, highlightRegex) {
+        const transactions = transactionsToRender || window.Storage.getTransactions();
+        listContainer.innerHTML = '';
+
+        if (transactions.length === 0) {
+            listContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No transactions found.</p>';
+            return;
+        }
+
+        transactions.forEach(txn => {
+            const item = createTransactionItem(txn, highlightRegex);
+            listContainer.appendChild(item);
+        });
+    }
 
     //Create a transaction item element
-     
-    function createTransactionItem(txn) {
+    function createTransactionItem(txn, highlightRegex) {
         const div = document.createElement('div');
         div.className = 'transaction-item';
         div.dataset.id = txn.id;
 
         const amountClass = txn.type === 'Income' ? 'positive' : 'negative';
+        const highlightedDesc = highlightRegex ? highlight(txn.description, highlightRegex) : txn.description;
 
         div.innerHTML = `
             <span class="txn-tag category-${txn.category.toLowerCase()}">${txn.category.substring(0, 6)}</span>
             <div class="txn-details">
-                <p class="txn-desc">${txn.description}</p>
+                <p class="txn-desc">${highlightedDesc}</p>
                 <p class="txn-date">${txn.date}</p>
             </div>
             <div class="txn-amount ${amountClass}">${window.Storage.formatCurrency(txn.amount)}</div>
@@ -131,12 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         row.querySelector('.confirm-yes').addEventListener('click', () => {
             window.Storage.deleteTransaction(id);
-            renderTransactions(); 
+            renderTransactions();
         });
 
         row.querySelector('.confirm-no').addEventListener('click', () => {
             row.classList.remove('deleting');
-            renderTransactions(); 
+            renderTransactions();
         });
     }
 

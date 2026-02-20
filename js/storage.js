@@ -1,14 +1,20 @@
 //Storage utility for Student Finance Tracker
- 
+
 
 const STORAGE_KEY = 'student_finance_transactions';
 const SETTINGS_KEY = 'student_finance_settings';
 
 const DEFAULT_SETTINGS = {
     userName: 'Student',
+    currency: 'GBP',
+    monthlyBudget: 600,
     darkMode: false,
-    currency: 'USD',
-    monthlyBudget: 600.00
+    exchangeRates: {
+        'USD': 1.0,
+        'RWF': 1455.0,
+        'EUR': 0.94,
+        'GBP': 0.79
+    }
 };
 
 const Storage = {
@@ -16,21 +22,28 @@ const Storage = {
 
     getSettings: function () {
         const data = localStorage.getItem(SETTINGS_KEY);
-        return data ? { ...DEFAULT_SETTINGS, ...JSON.parse(data) } : DEFAULT_SETTINGS;
+        // Deep merge for exchangeRates
+        const parsed = data ? JSON.parse(data) : {};
+        return {
+            ...DEFAULT_SETTINGS,
+            ...parsed,
+            exchangeRates: { ...DEFAULT_SETTINGS.exchangeRates, ...(parsed.exchangeRates || {}) }
+        };
     },
 
-    saveSettings: function (settings) {
+    saveSettings: function (newSettings) {
         const current = this.getSettings();
-        const updated = { ...current, ...settings };
+        // Handle deep merge for exchangeRates if present in newSettings
+        const updated = { ...current, ...newSettings };
+        if (newSettings.exchangeRates) {
+            updated.exchangeRates = { ...current.exchangeRates, ...newSettings.exchangeRates };
+        }
         localStorage.setItem(SETTINGS_KEY, JSON.stringify(updated));
     },
 
     //Currency Formatting & Conversion
-    EXCHANGE_RATES: {
-        'USD': 1.0,
-        'RWF': 1455.0,
-        'EUR': 0.84,
-        'GBP': 0.73
+    getExchangeRates: function () {
+        return this.getSettings().exchangeRates;
     },
 
     getCurrencySymbol: function () {
@@ -52,10 +65,11 @@ const Storage = {
      */
     convert: function (amount, from, to) {
         if (from === to) return amount;
+        const rates = this.getExchangeRates();
         // Convert from source to USD first
-        const usdAmount = amount / this.EXCHANGE_RATES[from];
+        const usdAmount = amount / rates[from];
         // Then from USD to target
-        return usdAmount * this.EXCHANGE_RATES[to];
+        return usdAmount * rates[to];
     },
 
     /**
@@ -66,7 +80,8 @@ const Storage = {
         const settings = this.getSettings();
         const currency = settings.currency;
         const symbol = this.getCurrencySymbol();
-        const converted = amount * this.EXCHANGE_RATES[currency];
+        const rates = settings.exchangeRates;
+        const converted = amount * rates[currency];
 
         const isRWF = currency === 'RWF';
         const formatted = converted.toLocaleString(undefined, {
@@ -79,9 +94,11 @@ const Storage = {
 
     //Returns the raw converted value for input fields
     getCurrencyDisplayValue: function (usdAmount) {
-        const currency = this.getSettings().currency;
-        const converted = usdAmount * this.EXCHANGE_RATES[currency];
-        const isRWF = currency === 'RWF';
+        const settings = this.getSettings();
+        const currency = settings.currency;
+        const rates = settings.exchangeRates;
+        const converted = usdAmount * rates[currency];
+        const isRWF = (currency === 'RWF');
         return isRWF ? Math.round(converted) : parseFloat(converted.toFixed(2));
     },
 
@@ -129,35 +146,37 @@ const Storage = {
         return data ? JSON.parse(data) : [];
     },
 
-    saveTransaction: function (transaction) {
+    saveTransaction: function (txn) {
         const transactions = this.getTransactions();
-        if (!transaction.id) {
-            transaction.id = Date.now().toString();
-        }
-        transactions.push(transaction);
+        const now = new Date().toISOString();
+
+        // Add timestamps
+        txn.createdAt = now;
+        txn.updatedAt = now;
+
+        transactions.unshift(txn); // Add to beginning
         localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
     },
 
     updateTransaction: function (id, updatedData) {
-        let transactions = this.getTransactions();
+        const transactions = this.getTransactions();
         const index = transactions.findIndex(t => t.id === id);
         if (index !== -1) {
-            transactions[index] = { ...transactions[index], ...updatedData };
+            // Update timestamps
+            const now = new Date().toISOString();
+            transactions[index] = {
+                ...transactions[index],
+                ...updatedData,
+                updatedAt: now
+            };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
-            return true;
         }
-        return false;
     },
 
     deleteTransaction: function (id) {
-        let transactions = this.getTransactions();
-        const initialLength = transactions.length;
-        transactions = transactions.filter(t => t.id !== id);
-        if (transactions.length !== initialLength) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions));
-            return true;
-        }
-        return false;
+        const transactions = this.getTransactions();
+        const filtered = transactions.filter(t => t.id !== id);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
     }
 };
 
