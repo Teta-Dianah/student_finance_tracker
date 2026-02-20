@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Regex Validation Tests</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+
+        .test-case {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Regex Validation Tests</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+
+        // Rubric Required Regexes
+        const descriptionRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+(?:\s[a-zA-Z0-9]+)*$/;
+        const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
+        const categoryRegex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
+        const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+
+        function assert(name, regex, value, expected) {
+            const actual = regex.test(value);
+            const isPass = actual === expected;
+            const div = document.createElement('div');
+            div.className = 'test-case';
+            div.innerHTML = `
+                <strong>${name}</strong>: 
+                Testing <code>"${value}"</code> -> 
+                <span class="${isPass ? 'pass' : 'fail'}">${isPass ? 'PASS' : 'FAIL'}</span>
+                (Result: ${actual})
+            `;
+            results.appendChild(div);
+        }
+
+        // 1. Description (Advanced Lookahead)
+        assert("Desc: Valid alphanumeric", descriptionRegex, "Lunch 123", true);
+        assert("Desc: Number only (Invalid)", descriptionRegex, "12345", false);
+        assert("Desc: Multi-space (Invalid)", descriptionRegex, "Lunch  123", false);
+
+        // 2. Amount
+        assert("Amount: 12.50", amountRegex, "12.50", true);
+        assert("Amount: 10", amountRegex, "10", true);
+        assert("Amount: .50 (Invalid)", amountRegex, ".50", false);
+
+        // 3. Category
+        assert("Category: Food", categoryRegex, "Food", true);
+        assert("Category: Transport-Bus", categoryRegex, "Transport-Bus", true);
+        assert("Category: Food 1 (Invalid)", categoryRegex, "Food 1", false);
+
+        // 4. Date
+        assert("Date: 2025-09-29", dateRegex, "2025-09-29", true);
+        assert("Date: 2025-13-29 (Invalid)", dateRegex, "2025-13-29", false);
+    </script>
+</body>
+
+</html>
