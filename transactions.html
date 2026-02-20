@@ -41,6 +41,7 @@
             <!-- Header -->
             <header class="app-header">
                 <h1>Transactions</h1>
+                <div id="search-status" class="sr-only" aria-live="polite"></div>
                 <div class="user-profile">
                     <span class="user-name">Student</span>
                 </div>
@@ -49,8 +50,12 @@
             <!-- Transactions Section -->
             <section id="transactions" class="view-section">
                 <div class="controls-bar glass">
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Search..." aria-label="Search transactions">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search description or regex...">
+                        <label
+                            style="display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap;">
+                            <input type="checkbox" id="case-sensitive-toggle"> Case Sensitive
+                        </label>
                     </div>
                     <div class="filters">
                         <select id="category-filter" aria-label="Filter by category">

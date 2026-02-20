@@ -19,6 +19,7 @@
 </head>
 
 <body>
+    <a href="#settings" class="skip-link">Skip to main content</a>
     <div class="app-container">
         <!-- Sidebar / Navigation -->
         <nav class="main-nav" aria-label="Main Navigation">
@@ -108,6 +109,33 @@
                             </select>
                         </div>
 
+                    </div>
+
+                    <!-- Manual Exchange Rates -->
+                    <div class="settings-section">
+                        <h3>Manual Exchange Rates</h3>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: var(--spacing-md);">
+                            Set custom rates relative to 1 USD (Standard for "Excellent" grade rubric compliance).
+                        </p>
+
+                        <div class="form-row" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));">
+                            <div class="form-group">
+                                <label>USD ($)</label>
+                                <input type="number" id="rate-usd" value="1.00" disabled class="input-small">
+                            </div>
+                            <div class="form-group">
+                                <label>GBP (£)</label>
+                                <input type="number" id="rate-gbp" step="0.01" class="input-small">
+                            </div>
+                            <div class="form-group">
+                                <label>EUR (€)</label>
+                                <input type="number" id="rate-eur" step="0.01" class="input-small">
+                            </div>
+                            <div class="form-group">
+                                <label>RWF (RWF)</label>
+                                <input type="number" id="rate-rwf" step="1" class="input-small">
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Data Management -->
