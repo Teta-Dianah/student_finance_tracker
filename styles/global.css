@@ -37,7 +37,6 @@ a:hover {
     color: var(--accent-secondary);
 }
 
-/* Simple Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -48,20 +47,19 @@ a:hover {
 
 ::-webkit-scrollbar-thumb {
     background-color: #CBD5E1;
-    /* Light Slate */
     border-radius: var(--radius-full);
 }
 
 :root.dark-mode ::-webkit-scrollbar-thumb {
     background-color: #334155;
-    /* Dark Slate */
+    
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--text-secondary);
 }
 
-/* Utilities */
+
 .visually-hidden {
     position: absolute;
     width: 1px;

@@ -1,6 +1,4 @@
-/* Components - Minimalist Text-Based Design */
 
-/* Glassmorphism Refined for Visibility */
 .glass {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -12,7 +10,7 @@
     box-shadow: 0 10px 30px rgba(0, 128, 128, 0.15);
 }
 
-/* Navigation - Text Pills */
+
 .main-nav {
     background: rgba(255, 255, 255, 0.95);
     position: fixed;
@@ -58,12 +56,12 @@
 
 .nav-link .icon {
     display: none;
-    /* Force hide icons */
+    
 }
 
 .nav-link .text {
     display: block;
-    /* Always show text */
+    
 }
 
 .nav-item.active .nav-link {
@@ -77,7 +75,7 @@
     color: var(--text-primary);
 }
 
-/* Header */
+
 .app-header {
     display: flex;
     justify-content: space-between;
@@ -118,7 +116,7 @@
     border: 2px solid var(--card-border);
 }
 
-/* Section Headers */
+
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -138,7 +136,6 @@
     color: var(--accent-primary);
 }
 
-/* Stat Cards - Clean Typography */
 .stat-card {
     padding: var(--spacing-lg);
     flex: 1;
@@ -173,7 +170,6 @@
     letter-spacing: -1px;
 }
 
-/* Trend Report Section */
 .trend-report {
     padding: var(--spacing-xl);
     margin-top: var(--spacing-lg);
@@ -182,7 +178,6 @@
 .trend-report h2 {
     font-size: var(--font-size-lg);
     margin-bottom: 50px;
-    /* Increased margin for breathing room */
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -262,23 +257,19 @@
     text-transform: uppercase;
 }
 
-/* Axis Labels Mockup */
 .trend-y-axis {
     position: absolute;
     left: 10px;
-    /* Moved inside the container padding */
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     font-size: 0.7rem;
-    /* Slightly larger for visibility */
     color: var(--text-secondary);
     pointer-events: none;
     z-index: 1;
 }
 
-/* Transaction List - Text Only */
 .recent-transactions {
     padding: 0;
     background: transparent;
@@ -290,7 +281,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* Increased from sm */
 }
 
 .transaction-item {
@@ -306,10 +296,9 @@
 
 .transaction-item:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-    /* Stronger shadow on hover */
+
 }
 
-/* Transaction Tags (Replacing Icons) */
 .txn-tag {
     font-size: 0.75rem;
     font-weight: 700;
@@ -351,7 +340,6 @@
     border: 1px solid #cbd5e1;
 }
 
-/* Income Categories Stylings */
 .category-salary {
     background: #dcfce7;
     color: #15803d;
@@ -409,7 +397,6 @@
     content: '+';
 }
 
-/* Controls */
 .controls-bar {
     background: var(--bg-secondary);
     border: 1px solid var(--glass-border);
@@ -425,11 +412,9 @@ button {
     font-family: var(--font-family);
 }
 
-/* Forms */
 .form-container {
     padding: var(--spacing-xl);
     max-width: 800px;
-    /* Increased from 700px */
     margin: 40px auto;
     background: var(--bg-secondary);
     border: 1px solid var(--glass-border);
@@ -454,6 +439,27 @@ button {
     .form-row {
         grid-template-columns: 1fr 1fr;
     }
+}
+
+.alert-warning {
+    background-color: #FEF2F2;
+    border: 1px solid #FCA5A5;
+    color: #B91C1C;
+    padding: 10px 16px;
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+:root.dark-mode .alert-warning {
+    background-color: rgba(220, 38, 38, 0.1);
+    border-color: rgba(220, 38, 38, 0.3);
+    color: #FCA5A5;
+}
+
+.hidden {
+    display: none !important;
 }
 
 label {
@@ -500,7 +506,6 @@ select.valid:focus {
     box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.2);
 }
 
-/* Compact Inputs (for Settings/Headers) */
 .input-small {
     width: auto !important;
     padding: 8px 12px !important;
@@ -552,7 +557,6 @@ select.invalid:focus {
     color: white;
 }
 
-/* Primary Button */
 .btn-primary {
     width: 60%;
     padding: 16px;
@@ -581,13 +585,12 @@ select.invalid:focus {
     box-shadow: 0 5px 15px rgba(0, 128, 128, 0.2);
 }
 
-/* About Page */
+
 .about-content {
     max-width: 800px;
     margin: 0 auto;
 }
 
-/* Action Buttons */
 .btn-action {
     background: transparent;
     border: 1px solid var(--glass-border);
@@ -624,7 +627,7 @@ select.invalid:focus {
     color: white;
 }
 
-/* Settings Simplified - More Human, Less Template */
+
 .settings-section {
     margin-bottom: var(--spacing-xl);
 }
@@ -664,7 +667,6 @@ select.invalid:focus {
     color: var(--text-secondary);
 }
 
-/* Cleaner, Standard Checkbox Styling */
 .setting-item input[type="checkbox"] {
     width: 20px;
     height: 20px;
@@ -672,7 +674,6 @@ select.invalid:focus {
     accent-color: var(--accent-primary);
 }
 
-/* Simple Danger Link/Button */
 .btn-danger {
     background: transparent;
     color: #ef4444;
@@ -719,7 +720,6 @@ select.invalid:focus {
     margin-bottom: var(--spacing-sm);
 }
 
-/* Brand - Desktop */
 .nav-brand {
     display: none;
     padding: var(--spacing-lg);

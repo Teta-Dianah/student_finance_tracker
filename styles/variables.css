@@ -1,24 +1,23 @@
 :root {
-    /* Colors - Simple Minimalist Theme */
+    
     --bg-primary: #F1F5F9;
-    /* Very Soft Slate */
+    
     --bg-secondary: #FFFFFF;
 
     --text-primary: #334155;
-    /* Slate 700 */
+    
     --text-secondary: #64748B;
-    /* Slate 500 */
+    
     --text-accent: #0F172A;
-    /* Slate 900 */
+    
 
     --accent-primary: #64748B;
-    /* Neutral Slate */
+    
     --accent-secondary: #475569;
     --accent-success: #16A34A;
     --accent-danger: #DC2626;
     --accent-warning: #D97706;
 
-    /* Typography */
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
@@ -26,43 +25,38 @@
     --font-size-xl: 1.5rem;
     --font-size-2xl: 2.25rem;
 
-    /* Spacing */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 20px;
     --spacing-lg: 32px;
     --spacing-xl: 48px;
 
-    /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
     --radius-full: 9999px;
 
-    /* Transitions */
     --transition-fast: 0.15s ease;
     --transition-normal: 0.25s ease;
 
-    /* Design Tokens - Light */
     --card-bg: #FFFFFF;
     --card-border: #E2E8F0;
     --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-    /* Input Backgrounds */
     --input-bg: #FFFFFF;
     --input-focus-bg: #FFFFFF;
 }
 
-/* Dark Mode Overrides - Minimalist */
+
 :root.dark-mode {
     --bg-primary: #0F172A;
-    /* Slate 900 */
+    
     --bg-secondary: #1E293B;
-    /* Slate 800 */
+    
 
     --text-primary: #F8FAFC;
     --text-secondary: #94A3B8;
-    /* Slate 400 */
+    
     --text-accent: #38BDF8;
 
     --accent-primary: #94A3B8;
@@ -71,12 +65,11 @@
     --accent-danger: #EF4444;
     --accent-warning: #F59E0B;
 
-    /* Card Tokens - Dark */
+    
     --card-bg: #1E293B;
     --card-border: #334155;
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-    /* Input Overrides */
     --input-bg: #1E293B;
     --input-focus-bg: #0F172A;
 }
