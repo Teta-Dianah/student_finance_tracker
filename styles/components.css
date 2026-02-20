@@ -2,10 +2,9 @@
 
 /* Glassmorphism Refined for Visibility */
 .glass {
-    background: var(--glass-bg);
-    backdrop-filter: var(--backdrop-blur);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
     border-radius: var(--radius-md);
 }
 
@@ -108,20 +107,15 @@
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-primary), #0d9488);
+    background: linear-gradient(135deg, var(--accent-primary), #475569);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
     font-size: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
-    border: 2px solid var(--glass-border);
-    transition: transform var(--transition-fast);
-}
-
-.avatar:hover {
-    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--card-border);
 }
 
 /* Section Headers */
@@ -146,20 +140,20 @@
 
 /* Stat Cards - Clean Typography */
 .stat-card {
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    flex: 1;
+    min-width: 240px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-sm);
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    transition: all var(--transition-fast);
-    min-height: 120px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--radius-lg);
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 128, 128, 0.12);
     border-color: var(--accent-primary);
 }
 
@@ -187,7 +181,8 @@
 
 .trend-report h2 {
     font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 50px;
+    /* Increased margin for breathing room */
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -199,10 +194,27 @@
     align-items: flex-end;
     justify-content: space-between;
     height: 250px;
-    /* Much taller */
-    padding: 20px 0 40px 0;
+    padding: 20px 20px 40px 80px;
     position: relative;
     border-bottom: 2px solid #e2e8f0;
+}
+
+.trend-y-axis {
+    position: absolute;
+    left: 0;
+    width: 70px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.trend-y-axis span {
+    text-align: right;
 }
 
 .trend-bar-wrapper {
@@ -222,11 +234,6 @@
     position: relative;
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
-}
-
-.trend-bar:hover {
-    filter: brightness(1.1);
-    transform: scaleX(1.1);
 }
 
 .trend-bar::before {
@@ -258,14 +265,17 @@
 /* Axis Labels Mockup */
 .trend-y-axis {
     position: absolute;
-    left: -20px;
+    left: 10px;
+    /* Moved inside the container padding */
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
+    /* Slightly larger for visibility */
     color: var(--text-secondary);
     pointer-events: none;
+    z-index: 1;
 }
 
 /* Transaction List - Text Only */
@@ -286,20 +296,15 @@
 .transaction-item {
     display: flex;
     align-items: center;
-    padding: 24px 32px;
-    /* Increased padding */
-    background: var(--bg-secondary);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-sm);
-    gap: 30px;
-    /* Increased gap */
-    transition: transform var(--transition-fast);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    /* Softer shadow */
+    padding: 16px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    gap: 20px;
+    box-shadow: var(--card-shadow);
 }
 
 .transaction-item:hover {
-    transform: translateX(5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     /* Stronger shadow on hover */
 }

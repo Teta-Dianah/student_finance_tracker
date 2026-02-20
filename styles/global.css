@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 body {
-    background: var(--bg-primary);
-    color: var(--text-primary);
     font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.app-container {
+    background-color: var(--bg-primary);
     min-height: 100vh;
 }
 
@@ -27,14 +34,12 @@ a {
 }
 
 a:hover {
-    text-decoration: none;
     color: var(--accent-secondary);
 }
 
-/* Scrollbar */
+/* Simple Scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -42,10 +47,14 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background-color: #CBD5E1;
+    /* Light Slate */
     border-radius: var(--radius-full);
-    border: 3px solid transparent;
-    background-clip: content-box;
+}
+
+:root.dark-mode ::-webkit-scrollbar-thumb {
+    background-color: #334155;
+    /* Dark Slate */
 }
 
 ::-webkit-scrollbar-thumb:hover {
