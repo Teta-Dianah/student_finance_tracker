@@ -14,11 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const budgetProgressBar = document.getElementById('budget-progress-bar');
     const budgetSpentText = document.getElementById('budget-spent-text');
     const budgetLimitText = document.getElementById('budget-limit-text');
+    const budgetWarning = document.getElementById('budget-warning');
 
+    /**
+     * Update Dashboard Stats & Visuals
+     */
     function updateDashboard() {
         const transactions = window.Storage.getTransactions();
         const settings = window.Storage.getSettings();
-        const MONTHLY_BUDGET = settings.monthlyBudget;
+        const MONTHLY_BUDGET = parseFloat(settings.monthlyBudget) || 0;
 
         // 1. Total Records
         if (totalRecordsEl) totalRecordsEl.textContent = transactions.length;
@@ -46,8 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 totalExpenses += amount;
 
                 // Monthly Spending (Expenses for the current month for budget tracker)
-                const txnDate = new Date(txn.date);
-                if (txnDate.getMonth() === currentMonth && txnDate.getFullYear() === currentYear) {
+                // Use string comparison (YYYY-MM) to avoid timezone/UTC parsing shifts
+                const currentMonthStr = (currentMonth + 1).toString().padStart(2, '0');
+                const currentYearStr = currentYear.toString();
+                const txnDateStr = txn.date; // Format is YYYY-MM-DD
+
+                if (txnDateStr.startsWith(`${currentYearStr}-${currentMonthStr}`)) {
                     monthlySpending += amount;
                 }
             }
@@ -56,8 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // The user asked for "remaining amount" = totalIncome - totalExpenses
         const remainingAmount = totalIncome - totalExpenses;
 
-        // Progress bar logic: Total Expenses relative to Total Income
-        const spendingPercentage = totalIncome > 0 ? Math.min(100, (totalExpenses / totalIncome) * 100) : 0;
+        // Progress bar logic: Current Month's Spending relative to Monthly Budget
+        const spendingPercentage = MONTHLY_BUDGET > 0 ? Math.min(100, (monthlySpending / MONTHLY_BUDGET) * 100) : 0;
 
         // Update Stat Cards (Using Global Formatter)
         if (totalBalanceEl) totalBalanceEl.textContent = window.Storage.formatCurrency(totalIncome);
@@ -67,35 +75,49 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update Budget Gap Section
         if (budgetProgressBar) {
             budgetProgressBar.style.width = `${spendingPercentage}%`;
-            // Change color if spending is heavy relative to income
+            // Change color based on monthly budget utilization
             if (spendingPercentage >= 100) {
-                budgetProgressBar.style.background = '#ef4444'; // Red
+                budgetProgressBar.style.background = '#ef4444'; // Red (Exceeded)
             } else if (spendingPercentage >= 80) {
-                budgetProgressBar.style.background = '#f59e0b'; // Orange
+                budgetProgressBar.style.background = '#f59e0b'; // Orange (Warning)
             } else {
                 budgetProgressBar.style.background = 'var(--accent-primary)';
             }
         }
         if (budgetSpentText) {
-            budgetSpentText.textContent = `Total Spent: ${window.Storage.formatCurrency(totalExpenses)}`;
+            budgetSpentText.textContent = `Month's Spending: ${window.Storage.formatCurrency(monthlySpending)}`;
         }
         if (budgetLimitText) {
-            budgetLimitText.textContent = `Total Income: ${window.Storage.formatCurrency(totalIncome)}`;
+            budgetLimitText.textContent = `Monthly Budget: ${window.Storage.formatCurrency(MONTHLY_BUDGET)}`;
         }
 
-        // 4. Top Category (Highest transaction count)
+        // 3.5 Budget Warning Logic (Dynamic & Precision-safe)
+        if (budgetWarning) {
+            // Compare rounded cents to avoid floating point issues
+            const spendingCents = Math.round(monthlySpending * 100);
+            const budgetCents = Math.round(MONTHLY_BUDGET * 100);
+
+            // Warning ONLY if budget is set (>0) AND spending is strictly greater
+            if (budgetCents > 0 && spendingCents > budgetCents) {
+                budgetWarning.classList.remove('hidden');
+            } else {
+                budgetWarning.classList.add('hidden');
+            }
+        }
+
+        // 4. Top Category (Highest total expenditure)
         const expenseTransactions = transactions.filter(t => (t.type || 'Expense') === 'Expense');
         if (expenseTransactions.length > 0) {
-            const categoryCounts = {};
+            const categoryTotals = {};
             expenseTransactions.forEach(txn => {
-                categoryCounts[txn.category] = (categoryCounts[txn.category] || 0) + 1;
+                categoryTotals[txn.category] = (categoryTotals[txn.category] || 0) + parseFloat(txn.amount);
             });
 
             let topCat = '';
-            let maxCount = 0;
-            for (const cat in categoryCounts) {
-                if (categoryCounts[cat] > maxCount) {
-                    maxCount = categoryCounts[cat];
+            let maxSpent = 0;
+            for (const cat in categoryTotals) {
+                if (categoryTotals[cat] > maxSpent) {
+                    maxSpent = categoryTotals[cat];
                     topCat = cat;
                 }
             }
@@ -164,9 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const ySpans = yAxis.querySelectorAll('span');
-        const symbol = window.Storage.getCurrencySymbol();
         labels.forEach((val, i) => {
-            if (ySpans[i]) ySpans[i].textContent = `${symbol}${val}`;
+            if (ySpans[i]) {
+                // Format the Y-axis value as a USD base amount 
+                // for the current display currency
+                ySpans[i].textContent = window.Storage.formatCurrency(val);
+            }
         });
 
         const oldBarWrappers = trendContainer.querySelectorAll('.trend-bar-wrapper');
@@ -194,4 +219,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateDashboard();
+
+    // Listen for storage changes (e.g., if user updates budget in another tab/page)
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'student_finance_settings' || e.key === 'student_finance_transactions') {
+            updateDashboard();
+        }
+    });
+
+    // Also update when returning to the tab (Back button / bfcache)
+    window.addEventListener('pageshow', (event) => {
+        updateDashboard();
+    });
 });

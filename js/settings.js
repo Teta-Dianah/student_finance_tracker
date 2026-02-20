@@ -33,8 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const settings = window.Storage.getSettings();
     darkModeToggle.checked = settings.darkMode;
     currencySelect.value = settings.currency;
-    budgetInput.value = settings.monthlyBudget;
     userNameInput.value = settings.userName;
+
+    // Load budget as converted display value
+    budgetInput.value = window.Storage.getCurrencyDisplayValue(settings.monthlyBudget);
+
+    // Update budget symbol
+    const initialSymbolSpan = budgetInput.previousElementSibling;
+    if (initialSymbolSpan && initialSymbolSpan.tagName === 'SPAN') {
+        initialSymbolSpan.textContent = window.Storage.getCurrencySymbol();
+    }
 
     // 2. Personalization: Dark Mode
     darkModeToggle.addEventListener('change', () => {
@@ -56,19 +64,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update header elements immediately
         document.querySelectorAll('.user-name').forEach(el => el.textContent = newName);
-        document.querySelectorAll('.avatar').forEach(el => el.textContent = newInitial);
     });
 
     // 4. Currency Preferences
+    let previousCurrency = currencySelect.value;
     currencySelect.addEventListener('change', () => {
-        window.Storage.saveSettings({ currency: currencySelect.value });
+        const newCurrency = currencySelect.value;
+        const currentBudget = parseFloat(budgetInput.value) || 0;
+
+        // Convert current displayed budget to USD using previous currency
+        const usdBudget = window.Storage.convert(currentBudget, previousCurrency, 'USD');
+
+        // Save new currency
+        window.Storage.saveSettings({ currency: newCurrency });
+
+        // Recalculate and update the display value in the input
+        const newDisplayBudget = window.Storage.getCurrencyDisplayValue(usdBudget);
+        budgetInput.value = newDisplayBudget;
+
+        // Update the symbol span if it exists (Financial Goals section)
+        const symbolSpan = budgetInput.previousElementSibling;
+        if (symbolSpan && symbolSpan.tagName === 'SPAN') {
+            symbolSpan.textContent = window.Storage.getCurrencySymbol();
+        }
+
+        previousCurrency = newCurrency;
     });
 
     // 5. Budget Goals
     budgetInput.addEventListener('input', () => {
-        const val = parseFloat(budgetInput.value);
-        if (!isNaN(val)) {
-            window.Storage.saveSettings({ monthlyBudget: val });
+        const displayVal = parseFloat(budgetInput.value);
+        if (!isNaN(displayVal)) {
+            // Convert the displayed value to USD before saving
+            const usdVal = window.Storage.convert(displayVal, currencySelect.value, 'USD');
+            window.Storage.saveSettings({ monthlyBudget: usdVal });
         }
     });
 

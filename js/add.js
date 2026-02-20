@@ -137,9 +137,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Only save if valid
+        const displayAmount = parseFloat(amount);
+        const currentCurrency = window.Storage.getSettings().currency;
+        // Convert to USD (Base Currency)
+        const usdAmount = window.Storage.convert(displayAmount, currentCurrency, 'USD');
+
         const transaction = {
             description: desc,
-            amount: parseFloat(amount),
+            amount: usdAmount, // Store in USD
             type: type,
             category: category,
             date: date,
