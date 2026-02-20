@@ -1,6 +1,5 @@
-/**
- * Storage utility for Student Finance Tracker
- */
+//Storage utility for Student Finance Tracker
+ 
 
 const STORAGE_KEY = 'student_finance_transactions';
 const SETTINGS_KEY = 'student_finance_settings';
@@ -13,9 +12,8 @@ const DEFAULT_SETTINGS = {
 };
 
 const Storage = {
-    /**
-     * Settings Management
-     */
+    // Settings Management
+
     getSettings: function () {
         const data = localStorage.getItem(SETTINGS_KEY);
         return data ? { ...DEFAULT_SETTINGS, ...JSON.parse(data) } : DEFAULT_SETTINGS;
@@ -27,9 +25,7 @@ const Storage = {
         localStorage.setItem(SETTINGS_KEY, JSON.stringify(updated));
     },
 
-    /**
-     * Currency Formatting & Conversion
-     */
+    //Currency Formatting & Conversion
     EXCHANGE_RATES: {
         'USD': 1.0,
         'RWF': 1455.0,
@@ -81,9 +77,7 @@ const Storage = {
         return isRWF ? `${formatted} ${symbol}` : `${symbol}${formatted}`;
     },
 
-    /**
-     * Returns the raw converted value for input fields (no symbols).
-     */
+    //Returns the raw converted value for input fields
     getCurrencyDisplayValue: function (usdAmount) {
         const currency = this.getSettings().currency;
         const converted = usdAmount * this.EXCHANGE_RATES[currency];
@@ -91,9 +85,7 @@ const Storage = {
         return isRWF ? Math.round(converted) : parseFloat(converted.toFixed(2));
     },
 
-    /**
-     * Data Portability
-     */
+    //Data Portability
     exportData: function () {
         const transactions = this.getTransactions();
         const settings = this.getSettings();
@@ -131,9 +123,7 @@ const Storage = {
         localStorage.removeItem(SETTINGS_KEY);
     },
 
-    /**
-     * Transaction Management
-     */
+    // Transaction Management
     getTransactions: function () {
         const data = localStorage.getItem(STORAGE_KEY);
         return data ? JSON.parse(data) : [];

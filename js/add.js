@@ -1,6 +1,4 @@
-/**
- * Add Transaction Logic
- */
+// Adding the Transaction Logic
 
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('add-transaction-form');
@@ -11,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const dateInput = document.getElementById('date');
     const feedback = document.getElementById('form-feedback');
 
-    // Regexes provided by user
     // Regexes: Allows alphanumeric with at least one letter, single spaces only.
     const descriptionRegex = /^(?=.*[a-zA-Z])[a-zA-Z0-9]+(?:\s[a-zA-Z0-9]+)*$/;
     const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
@@ -133,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isDescValid || !isAmountValid || !isCategoryValid || !isDateValid) {
             feedback.textContent = 'Please fix the errors highlighted above.';
             feedback.classList.add('error');
-            return; // Stop here if invalid
+            return; 
         }
 
         // Only save if valid
@@ -144,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const transaction = {
             description: desc,
-            amount: usdAmount, // Store in USD
+            amount: usdAmount, 
             type: type,
             category: category,
             date: date,

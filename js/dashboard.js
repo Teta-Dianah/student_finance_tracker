@@ -1,7 +1,5 @@
-/**
- * Dashboard Logic
- */
-
+//Dashboard Logic
+ 
 document.addEventListener('DOMContentLoaded', () => {
     const totalBalanceEl = document.getElementById('total-balance-value');
     const totalExpensesEl = document.getElementById('total-expenses-value');
@@ -16,9 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const budgetLimitText = document.getElementById('budget-limit-text');
     const budgetWarning = document.getElementById('budget-warning');
 
-    /**
-     * Update Dashboard Stats & Visuals
-     */
+    // Update Dashboard Stats & Visuals
     function updateDashboard() {
         const transactions = window.Storage.getTransactions();
         const settings = window.Storage.getSettings();
@@ -33,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Remaining Amount = Total Balance - Total Expenses
         let totalIncome = 0;
         let totalExpenses = 0;
-        let monthlySpending = 0; // Still used for budget cap
+        let monthlySpending = 0; 
 
         const now = new Date();
         const currentMonth = now.getMonth();
@@ -41,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         transactions.forEach(txn => {
             const amount = parseFloat(txn.amount);
-            // Default to 'Expense' if type is missing (legacy support)
             const type = txn.type || 'Expense';
 
             if (type === 'Income') {
@@ -49,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (type === 'Expense') {
                 totalExpenses += amount;
 
-                // Monthly Spending (Expenses for the current month for budget tracker)
                 // Use string comparison (YYYY-MM) to avoid timezone/UTC parsing shifts
                 const currentMonthStr = (currentMonth + 1).toString().padStart(2, '0');
                 const currentYearStr = currentYear.toString();
@@ -61,13 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // The user asked for "remaining amount" = totalIncome - totalExpenses
         const remainingAmount = totalIncome - totalExpenses;
 
         // Progress bar logic: Current Month's Spending relative to Monthly Budget
         const spendingPercentage = MONTHLY_BUDGET > 0 ? Math.min(100, (monthlySpending / MONTHLY_BUDGET) * 100) : 0;
 
-        // Update Stat Cards (Using Global Formatter)
+        // Update Stat Cards 
         if (totalBalanceEl) totalBalanceEl.textContent = window.Storage.formatCurrency(totalIncome);
         if (totalExpensesEl) totalExpensesEl.textContent = window.Storage.formatCurrency(totalExpenses);
         if (remainingAmountEl) remainingAmountEl.textContent = window.Storage.formatCurrency(remainingAmount);
@@ -91,17 +84,20 @@ document.addEventListener('DOMContentLoaded', () => {
             budgetLimitText.textContent = `Monthly Budget: ${window.Storage.formatCurrency(MONTHLY_BUDGET)}`;
         }
 
-        // 3.5 Budget Warning Logic (Dynamic & Precision-safe)
+        // 3.5 Budget Warning Logic 
         if (budgetWarning) {
-            // Compare rounded cents to avoid floating point issues
             const spendingCents = Math.round(monthlySpending * 100);
             const budgetCents = Math.round(MONTHLY_BUDGET * 100);
+            
+            
+            console.log(`Budget Check: Spent=${spendingCents}cents, Limit=${budgetCents}cents`);
 
-            // Warning ONLY if budget is set (>0) AND spending is strictly greater
             if (budgetCents > 0 && spendingCents > budgetCents) {
                 budgetWarning.classList.remove('hidden');
+                budgetWarning.style.display = 'block'; 
             } else {
                 budgetWarning.classList.add('hidden');
+                budgetWarning.style.display = 'none'; 
             }
         }
 
@@ -126,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (topCategoryEl) topCategoryEl.textContent = 'None';
         }
 
-        // 5. Expenditure Trend (Responsive to latest transaction)
+        // 5. Expenditure Trend 
         renderTrendChart(transactions);
     }
 
@@ -135,9 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const referenceDate = new Date();
         referenceDate.setHours(0, 0, 0, 0);
 
-        // Find the Monday of the current week
-        // getDay() returns 0 for Sunday, 1 for Monday, etc.
-        // We want 1 (Mon) to be the start.
+    
         const dayOfWeek = referenceDate.getDay();
         const diffToMonday = (dayOfWeek === 0 ? -6 : 1 - dayOfWeek);
 
@@ -220,14 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateDashboard();
 
-    // Listen for storage changes (e.g., if user updates budget in another tab/page)
     window.addEventListener('storage', (e) => {
         if (e.key === 'student_finance_settings' || e.key === 'student_finance_transactions') {
             updateDashboard();
         }
     });
 
-    // Also update when returning to the tab (Back button / bfcache)
+    // Also update when returning to the tab 
     window.addEventListener('pageshow', (event) => {
         updateDashboard();
     });

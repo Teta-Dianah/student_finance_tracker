@@ -1,16 +1,13 @@
-/**
- * Settings Page Controller
- */
+// Settings Page Controller
 document.addEventListener('DOMContentLoaded', () => {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const currencySelect = document.getElementById('currency-select');
     const budgetInput = document.getElementById('budget-input');
     const userNameInput = document.getElementById('user-name-input');
 
-    const exportBtn = document.querySelector('button.btn-primary'); // Export button
-    const clearBtn = document.querySelector('button.btn-danger'); // Clear button
+    const exportBtn = document.querySelector('button.btn-primary'); 
+    const clearBtn = document.querySelector('button.btn-danger'); 
 
-    // Add Import UI dynamically (since it wasn't in the original HTML)
     const dataSection = exportBtn.closest('.settings-section');
     const importItem = document.createElement('div');
     importItem.className = 'setting-item';
@@ -62,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.Storage.saveSettings({ userName: newName });
 
-        // Update header elements immediately
         document.querySelectorAll('.user-name').forEach(el => el.textContent = newName);
     });
 
@@ -72,17 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const newCurrency = currencySelect.value;
         const currentBudget = parseFloat(budgetInput.value) || 0;
 
-        // Convert current displayed budget to USD using previous currency
         const usdBudget = window.Storage.convert(currentBudget, previousCurrency, 'USD');
 
-        // Save new currency
         window.Storage.saveSettings({ currency: newCurrency });
 
         // Recalculate and update the display value in the input
         const newDisplayBudget = window.Storage.getCurrencyDisplayValue(usdBudget);
         budgetInput.value = newDisplayBudget;
 
-        // Update the symbol span if it exists (Financial Goals section)
+        // Update the symbol span if it exists 
         const symbolSpan = budgetInput.previousElementSibling;
         if (symbolSpan && symbolSpan.tagName === 'SPAN') {
             symbolSpan.textContent = window.Storage.getCurrencySymbol();

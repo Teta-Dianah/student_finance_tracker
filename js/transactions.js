@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const amountRegex = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
     const categoryRegex = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 
-    /**
-     * Render the list of transactions
-     */
+    //Render the list of transaction
     function renderTransactions(transactionsToRender) {
         const transactions = transactionsToRender || window.Storage.getTransactions();
         listContainer.innerHTML = '';
@@ -32,9 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /**
-     * Filter and Sort Transactions logic
-     */
+    //Filter and Sort Transactions logic
     function filterAndSortTransactions() {
         const query = searchInput.value.toLowerCase();
         const category = categoryFilter.value;
@@ -83,9 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
     categoryFilter.addEventListener('change', filterAndSortTransactions);
     sortSelect.addEventListener('change', filterAndSortTransactions);
 
-    /**
-     * Create a transaction item element
-     */
+    //Create a transaction item element
+     
     function createTransactionItem(txn) {
         const div = document.createElement('div');
         div.className = 'transaction-item';
@@ -119,9 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return div;
     }
 
-    /**
-     * Show delete confirmation state
-     */
+    //Show delete confirmation state
     function showDeleteConfirmation(row, id) {
         const originalContent = row.innerHTML;
         row.classList.add('deleting');
@@ -138,18 +131,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         row.querySelector('.confirm-yes').addEventListener('click', () => {
             window.Storage.deleteTransaction(id);
-            renderTransactions(); // Refresh list
+            renderTransactions(); 
         });
 
         row.querySelector('.confirm-no').addEventListener('click', () => {
             row.classList.remove('deleting');
-            renderTransactions(); // Easy way to restore original state
+            renderTransactions(); 
         });
     }
 
-    /**
-     * Show edit mode state
-     */
+    // Show edit mode state
     function showEditMode(row, txn) {
         row.classList.add('editing');
 
