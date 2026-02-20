@@ -1,0 +1,120 @@
+{
+  "settings": {
+    "userName": "Student",
+    "currency": "GBP",
+    "monthlyBudget": 600,
+    "darkMode": false
+  },
+  "transactions": [
+    {
+      "id": "seed_001",
+      "description": "Monthly Rent Payment",
+      "amount": 450.00,
+      "category": "Other",
+      "type": "Expense",
+      "date": "2026-02-01",
+      "createdAt": "2026-02-01T10:00:00.000Z",
+      "updatedAt": "2026-02-01T10:00:00.000Z"
+    },
+    {
+      "id": "seed_002",
+      "description": "Weekly Groceries",
+      "amount": 35.50,
+      "category": "Food",
+      "type": "Expense",
+      "date": "2026-02-05",
+      "createdAt": "2026-02-05T15:30:00.000Z",
+      "updatedAt": "2026-02-05T15:30:00.000Z"
+    },
+    {
+      "id": "seed_003",
+      "description": "Part-time Job Salary",
+      "amount": 250.00,
+      "category": "Salary",
+      "type": "Income",
+      "date": "2026-02-10",
+      "createdAt": "2026-02-10T09:00:00.000Z",
+      "updatedAt": "2026-02-10T09:00:00.000Z"
+    },
+    {
+      "id": "seed_004",
+      "description": "Course Textbooks",
+      "amount": 85.00,
+      "category": "Books",
+      "type": "Expense",
+      "date": "2026-02-12",
+      "createdAt": "2026-02-12T11:20:00.000Z",
+      "updatedAt": "2026-02-12T11:20:00.000Z"
+    },
+    {
+      "id": "seed_005",
+      "description": "Monthly Bus Pass",
+      "amount": 45.00,
+      "category": "Transport",
+      "type": "Expense",
+      "date": "2026-02-14",
+      "createdAt": "2026-02-14T14:00:00.000Z",
+      "updatedAt": "2026-02-14T14:00:00.000Z"
+    },
+    {
+      "id": "seed_006",
+      "description": "Cinema with Friends",
+      "amount": 12.00,
+      "category": "Entertainment",
+      "type": "Expense",
+      "date": "2026-02-15",
+      "createdAt": "2026-02-15T19:45:00.000Z",
+      "updatedAt": "2026-02-15T19:45:00.000Z"
+    },
+    {
+      "id": "seed_007",
+      "description": "Allowance from Parents",
+      "amount": 100.00,
+      "category": "Allowance",
+      "type": "Income",
+      "date": "2026-02-16",
+      "createdAt": "2026-02-16T08:00:00.000Z",
+      "updatedAt": "2026-02-16T08:00:00.000Z"
+    },
+    {
+      "id": "seed_008",
+      "description": "Fast Food Lunch",
+      "amount": 8.75,
+      "category": "Food",
+      "type": "Expense",
+      "date": "2026-02-18",
+      "createdAt": "2026-02-18T13:10:00.000Z",
+      "updatedAt": "2026-02-18T13:10:00.000Z"
+    },
+    {
+      "id": "seed_009",
+      "description": "Stationery Supplies",
+      "amount": 15.20,
+      "category": "Books",
+      "type": "Expense",
+      "date": "2026-02-19",
+      "createdAt": "2026-02-19T10:30:00.000Z",
+      "updatedAt": "2026-02-19T10:30:00.000Z"
+    },
+    {
+      "id": "seed_010",
+      "description": "Gym Membership",
+      "amount": 20.00,
+      "category": "Other",
+      "type": "Expense",
+      "date": "2026-02-20",
+      "createdAt": "2026-02-20T11:00:00.000Z",
+      "updatedAt": "2026-02-20T11:00:00.000Z"
+    },
+    {
+      "id": "seed_011",
+      "description": "Netflix Subscription",
+      "amount": 9.99,
+      "category": "Entertainment",
+      "type": "Expense",
+      "date": "2026-02-20",
+      "createdAt": "2026-02-20T21:00:00.000Z",
+      "updatedAt": "2026-02-20T21:00:00.000Z"
+    }
+  ]
+}
