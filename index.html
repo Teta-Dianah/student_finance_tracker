@@ -44,7 +44,6 @@
                 <h1>Dashboard</h1>
                 <div class="user-profile">
                     <span class="user-name">Student</span>
-                    <div class="avatar">S</div>
                 </div>
             </header>
 
@@ -52,30 +51,30 @@
             <section id="dashboard" class="view-section">
                 <!-- Main Stats Grid -->
                 <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                    <div class="stat-card glass box-glow">
+                    <div class="stat-card">
                         <h3>Total Balance</h3>
                         <p id="total-balance-value" class="stat-value">$0.00</p>
                     </div>
-                    <div class="stat-card glass">
+                    <div class="stat-card">
                         <h3>Total Expenses</h3>
-                        <p id="total-expenses-value" class="stat-value">$0.00</p>
+                        <p id="total-expenses-value" class="stat-value text-danger">$0.00</p>
                     </div>
-                    <div class="stat-card glass">
+                    <div class="stat-card">
                         <h3>Remaining Amount</h3>
                         <p id="remaining-amount-value" class="stat-value">$0.00</p>
                     </div>
-                    <div class="stat-card glass">
+                    <div class="stat-card">
                         <h3>Top Category</h3>
                         <p id="top-category-value" class="stat-value">None</p>
                     </div>
-                    <div class="stat-card glass">
+                    <div class="stat-card">
                         <h3>Total Records</h3>
                         <p id="total-records-value" class="stat-value">0</p>
                     </div>
                 </div>
 
                 <!-- Expanded Trend Report Section -->
-                <div class="trend-report glass box-glow">
+                <div class="stat-card trend-report">
                     <h2>7-Day Expenditure Trend</h2>
                     <div id="trend-container" class="trend-container">
                         <!-- Y-Axis Mockup Labels -->
@@ -92,10 +91,16 @@
 
                 <!-- Budget & Goals -->
                 <div class="stats-grid" style="grid-template-columns: 1fr;">
-                    <div class="stat-card glass" style="min-height: auto;">
+                    <div class="stat-card" style="min-height: auto;">
                         <h3>Monthly Budget Cap</h3>
+
+                        <!-- Fixed Warning Div: Content must be INSIDE to be hidden -->
+                        <div id="budget-warning" class="alert-warning hidden" style="margin-bottom: 15px;">
+                            ⚠️ Budget Exceeded!
+                        </div>
+
                         <div
-                            style="width: 100%; background: var(--bg-secondary); height: 16px; border-radius: 8px; margin: 15px 0; overflow: hidden; position: relative; border: 1px solid var(--glass-border);">
+                            style="width: 100%; background: var(--bg-secondary); height: 16px; border-radius: 8px; margin: 15px 0; overflow: hidden; position: relative; border: 1px solid var(--card-border);">
                             <div id="budget-progress-bar"
                                 style="width: 0%; background: var(--accent-primary); height: 100%; border-radius: 8px 0 0 8px; transition: width 0.3s ease;">
                             </div>
